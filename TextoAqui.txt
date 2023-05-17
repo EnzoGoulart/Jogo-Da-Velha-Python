@@ -1,0 +1,94 @@
+def trocaJogador(jogadorAtual):
+    if jogadorAtual == 'X':
+        jogadorAtual = 'O'
+        return jogadorAtual
+    else:
+        jogadorAtual = 'X'
+        return jogadorAtual
+
+def confJog(txt):
+    while True:
+        try:
+            esc = int(input(txt))
+        except:
+            print('Digite um valor válido.')
+        else:
+            if(esc>8 or esc<0):
+                print('Digite um valor válido.')
+            else:
+                return esc
+def printGame():
+    for i, e in enumerate(poss):
+        if i != 2 and i != 5 and i != 8:
+            print(f'{e}|', end='')
+        else:
+            print(f'{e}')
+def jogadorIniciado(txt):
+    while True:
+        try:
+            escolhido = str(input(txt))
+        except:
+            print('Digite corretamente')
+        else:
+            if escolhido == 'X' or escolhido == 'x':
+                return 'X'
+            elif (escolhido == 'O' or escolhido == 'o'):
+                return 'O'
+            else:
+                print('Digite apenas X ou O')
+
+XWins = 0
+empate = 0
+OWins = 0
+totDrawns = 0
+partidas = 1
+
+while True:
+    poss = [0,1,2,3,4,5,6,7,8]
+    confDrawn = 0
+    empate = 0
+    jogadorAtual = jogadorIniciado('Quem começará, X ou O: ')
+    if partidas == 1:
+        print('Jogo da Velha')
+    else:
+        print(f'Jogo da Velha - Partida {partidas}')
+    printGame()
+    while True:
+        while True:
+            escolha = confJog(f'Jogada do {jogadorAtual}: ')
+            if poss[escolha] != 'X' and poss[escolha] !='O':
+                poss[escolha] = jogadorAtual
+                break
+        printGame()
+        jogadorAtual = trocaJogador(jogadorAtual)
+        if (poss[0] == 'X' and poss[1] == 'X' and poss[2] == 'X' or poss[3] == 'X' and poss[4] == 'X' and poss[5] == 'X' or poss[6] == 'X' and poss[7] == 'X' and poss[8] == 'X' or poss[0] == 'X' and poss[3] == 'X' and poss[6] == 'X' or poss[1] == 'X' and poss[4] == 'X' and poss[7] == 'X' or poss[2] == 'X' and poss[5] == 'X' and poss[8] == 'X' or poss[0] == 'X' and poss[4] == 'X' and poss[8] == 'X' or poss[2] == 'X' and poss[4] == 'X' and poss[6] == 'X'):
+            print(f'X ganhou!')
+            XWins +=1
+            break
+        if(poss[0] == 'O' and poss[1] == 'O' and poss[2] == 'O' or poss[3] == 'O' and poss[4] == 'O' and poss[5] == 'O' or poss[6] == 'O' and poss[7] == 'O' and poss[8] == 'O' or poss[0] == 'O' and poss[3] == 'O' and poss[6] == 'O' or poss[1] == 'O' and poss[4] == 'O' and poss[7] == 'O' or poss[2] == 'O' and poss[5] == 'O' and poss[8] == 'O' or poss[0] == 'O' and poss[4] == 'O' and poss[8] == 'O' or poss[2] == 'O' and poss[4] == 'O' and poss[6] == 'O'):
+            print('O ganhou!')
+            OWins +=1
+            break
+        for c in poss:
+            if(c == 'O' or c == 'X'):
+                confDrawn +=1
+                if(confDrawn == 9):
+                    empate = 1
+                    break
+                else:
+                    break
+        if(empate ==1 ):
+            print('Empate!')
+            totDrawns +=1
+            break
+
+    partidas += 1
+    print(f'X: {XWins} vs O: {OWins}.')
+    if totDrawns == 1:
+        print(f'Total de {totDrawns} empate.')
+    else:
+        print(f'Total de {totDrawns} empates.')
+    if partidas-1 == 1:
+        print(f'Total de {partidas-1} partida jogada.')
+    else:
+        print(f'Total de {partidas-1} partidas jogadas.')
